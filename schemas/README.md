@@ -1,1 +1,4 @@
 This directory contains drawn database [schemas](https://dbdiagram.io/d/PuzzleRender-ALX-SE-Specializations-Webstack-66ba77de8b4bb5230eeb94d0).
+
+![Database Schema Image:](schemas/db-schema.png)
+
