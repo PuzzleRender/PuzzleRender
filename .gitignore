@@ -1,0 +1,6 @@
+*.pdf
+note
+__pycache__/
+*.pyc
+*.sqlite3
+migrations/
