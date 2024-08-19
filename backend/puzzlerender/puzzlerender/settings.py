@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'authentication',  # Django's built-in authentication
+    'rest_framework',
+    'dj_rest_auth',  # Adds the REST API layer for authentication
+    'rest_framework.authtoken',  # Optional, if you want to use token authentication
 ]
 
 MIDDLEWARE = [
@@ -151,5 +154,26 @@ SOCIALACCOUNT_PROVIDERS = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+SITE_ID = 1
+
+# Email verification settings (adjust based on your needs)
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_EMAIL_REQUIRED = True
+
+# Authentication method settings
+ACCOUNT_AUTHENTICATION_METHOD = "email"  # Or "username_email"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',  # For session-based auth
+        'rest_framework.authentication.TokenAuthentication',  # For token-based auth (optional)
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+INSTALLED_APPS += ['allauth.socialaccount.providers.google']
