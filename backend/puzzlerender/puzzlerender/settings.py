@@ -164,6 +164,7 @@ SITE_ID = 1
 # Email verification settings (adjust based on your needs)
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
 
 # Authentication method settings
 ACCOUNT_AUTHENTICATION_METHOD = "email"  # Or "username_email"
