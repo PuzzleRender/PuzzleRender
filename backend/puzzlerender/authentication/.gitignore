@@ -1,0 +1,28 @@
+/env 
+./__pycache__/
+
+# Exclude database file
+db.sqlite3
+
+# Exclude static files
+/staticfiles/
+
+# Exclude media files
+/media/
+
+# Exclude environment variables file
+.env
+
+# Exclude IDE files
+.vscode/
+.idea/
+
+# Exclude compiled Python files
+*.pyc
+
+# Exclude log files
+*.log
+
+# Exclude cache files
+/__pycache__/
+
