@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # Registration endpoints
     path('api-auth/', include('rest_framework.urls')),  # Optional: For DRF's built-in login
     path('accounts/', include('allauth.urls')),  # Optional: For allauth's traditional views
+    path('api/v1/', include('prenderapp.urls')),
 ]
