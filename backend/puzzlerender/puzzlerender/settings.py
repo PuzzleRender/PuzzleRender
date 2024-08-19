@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'prenderapp', # The prerender app
     'authentication',  # Django's built-in authentication
     'rest_framework',
     'dj_rest_auth',  # Adds the REST API layer for authentication
