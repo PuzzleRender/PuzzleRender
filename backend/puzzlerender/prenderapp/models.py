@@ -6,9 +6,9 @@ The database models app (ORM)
 
 
 class Puzzle(models.Model):
-  """
-  The Puzzle table
-  """
+    """
+    The Puzzle table
+    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -20,9 +20,9 @@ class Puzzle(models.Model):
 
 
 class Clue(models.Model):
-  """
-  The Class table
-  """
+    """
+    The Class table
+    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     puzzle = models.ForeignKey(Puzzle, related_name='clues', on_delete=models.CASCADE)
     clue_text = models.TextField()
