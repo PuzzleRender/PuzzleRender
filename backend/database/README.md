@@ -1,1 +1,1 @@
-This file contains scrips that connect to our database and perform CRUD operations.
+This branch contains database setups and scripts.
