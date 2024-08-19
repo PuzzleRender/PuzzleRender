@@ -18,5 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')), # The allauth package
+    path('api/auth/', include('dj_rest_auth.urls')),  # Authentication endpoints (login, logout, etc.)
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # Registration endpoints
+    path('api-auth/', include('rest_framework.urls')),  # Optional: For DRF's built-in login
+    path('accounts/', include('allauth.urls')),  # Optional: For allauth's traditional views
 ]
