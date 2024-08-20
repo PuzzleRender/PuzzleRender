@@ -14,8 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from .views import home
 
 urlpatterns = [
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
+    path('api/auth/', include('dj_rest_auth.urls')),  # Authentication endpoints (login, logout, etc.)
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # Registration endpoints
+    path('api-auth/', include('rest_framework.urls')),  # Optional: For DRF's built-in login
+    path('accounts/', include('allauth.urls')),  # Optional: For allauth's traditional views
+    path('api/v1/', include('prenderapp.urls')),
 ]
