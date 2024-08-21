@@ -38,7 +38,7 @@ type CardProps = ComponentProps<typeof Card>;
 
 const PuzzleCard = ({ className, ...props }: CardProps) => {
   return (
-    <div>
+    <div className="hover:scale-105 transition-all">
       <Card className={cn("w-[380px]", className)} {...props}>
         <CardHeader>
           <div className="w-full">
@@ -77,7 +77,7 @@ const PuzzleCard = ({ className, ...props }: CardProps) => {
         </CardContent>
         <CardFooter>
           <Button className="w-full">
-            <Check className="mr-2 h-4 w-4" /> Mark all as read
+            <Check className="mr-2 h-4 w-4" /> Create Puzzle
           </Button>
         </CardFooter>
       </Card>
