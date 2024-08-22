@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,7 @@ const formSchema = z
     username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
-    password: z
+    password1: z
       .string()
       .min(8, { message: "Password must be at least 8 characters." })
       .regex(/[a-z]/, {
@@ -42,10 +42,10 @@ const formSchema = z
       .regex(/[\W_]/, {
         message: "Password must contain at least one special character.",
       }),
-    passwordConfirm: z.string(),
+    password2: z.string(),
   })
   .superRefine((data, ctx) => {
-    if (data.password !== data.passwordConfirm) {
+    if (data.password1 !== data.password2) {
       ctx.addIssue({
         code: "custom",
         path: ["passwordConfirm"],
@@ -61,27 +61,41 @@ export default function SignupPage() {
     defaultValues: {
       email: "",
       username: "",
-      password: "",
-      passwordConfirm: "",
+      password1: "",
+      password2: "",
     },
   });
 
   const router = useRouter();
-  const API_URL = "http://137.184.102.24"
+  // const API_URL = "http://137.184.102.24"
+  const API_URL = "http://127.0.0.1:8000"
+
+  const [csrfToken, setCsrfToken] = useState('');
+
+  useEffect(() => {
+    axios.get(`${API_URL}/gettoken/`)
+      .then((response) => {
+        setCsrfToken(response.data.csrfToken);
+      })
+      .catch((error) => {
+        console.error('Error fetching CSRF token:', error);
+      });
+  }, []);
+
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { email, username, password, passwordConfirm } = values;
+    const { email, username, password1, password2 } = values;
 
     try {
       const response = await axios.post(`${API_URL}/accounts/signup/`, {
         email,
         username,
-        password,
-        passwordConfirm,
+        password1,
+        password2,
       });
 
       if (response.status === 200) {
-        router.push("/dashboard");
+        // router.push("/dashboard");
         toast.success("Signup successful!");
         console.log("Signup successful!");
       } else {
@@ -89,15 +103,21 @@ export default function SignupPage() {
       }
     } catch (error) {
       // Handle errors, e.g., display a notification to the user
-      console.error("Login failed", error);
+      // console.error("Login failed", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response?.data || error.message);
+        toast.error(error.response?.data?.error || "An error occurred");
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred");
+      }
     }
   }
-
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center gap-4 p-8">
       <div>
-        <h2 className="text-xl font-bold text-center">LOGO</h2>
+        <h2 className="text-xl font-bold text-center mt-24">LOGO</h2>
         <p className="text-3xl font-semibold">SignUp</p>
       </div>
       <div className="flex flex-col items-center justify-center w-7/12 min-h-[50vh]">
@@ -141,7 +161,7 @@ export default function SignupPage() {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="password1"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
@@ -155,7 +175,7 @@ export default function SignupPage() {
               />
               <FormField
                 control={form.control}
-                name="passwordConfirm"
+                name="password2"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
