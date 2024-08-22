@@ -1,5 +1,5 @@
 <div align="center">
-  <img scr="https://github.com/PuzzleRender/PuzzleRender/blob/documentation/static/images/Landscape_PuzzleRender.jpeg" alt="PuzzleRender's Logo" width="400">
+  <img scr="Landscape_PuzzleRender.jpeg" alt="PuzzleRender's Logo">
 </div>
 <!--![PuzzleRender Logo](static/images/Landscape_PuzzleRender.jpeg)
 <h2 align="center">PuzzleRender ✨</h2>
