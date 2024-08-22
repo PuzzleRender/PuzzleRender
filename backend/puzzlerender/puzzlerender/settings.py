@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'dj_rest_auth',  # Adds the REST API layer for authentication
     'rest_framework.authtoken',  # Optional, if you want to use token authentication
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware', 
     'allauth.account.middleware.AccountMiddleware',# The allauth package
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+
 
 ROOT_URLCONF = 'puzzlerender.urls'
 
