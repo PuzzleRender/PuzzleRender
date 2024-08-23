@@ -11,11 +11,17 @@ const Navbar = () => {
           <Link href={"/"}>
             <h4>Home</h4>
           </Link>
-          <Link href={"/signin"}>
-            <h4>Login</h4>
+          <Link href={"/dashboard"}>
+            <h4>Dashboard</h4>
           </Link>
-          <Link href={"/signup"}>
-            <h4>Register</h4>
+          <Link href={"/puzzles"}>
+            <h4>Puzzles</h4>
+          </Link>
+          <Link href={"/account"}>
+            <h4>Account</h4>
+          </Link>
+          <Link href={"/signout"}>
+            <h4>Signout</h4>
           </Link>
         </div>
       </div>
