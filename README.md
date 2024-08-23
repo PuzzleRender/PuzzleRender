@@ -15,6 +15,9 @@
 | <img src="static/images/team/dohou-daniel.jpg" alt="Dohou Daniel Favour" width="375" height="375"> <strong><p align="center"><a href="https://linktr.ee/dohoudanielfavour/">Dohou Daniel Favour</a></p></strong>   | <img src="static/images/team/cobby-solomon.jpg" alt="Cobby Solomon" width="375" height="375"> <strong><p align="center"><a href="https://beacons.ai/cobbysefahsolomon">Cobby Solomon</a></p></strong>               |
 
 <br>
+<h3 align="center">Overview Of Project Architecture</h3>
+  <p align="center">When the user visits PuzzleRender, a request to the server is made through the browser. The request is then sent to the frontend, and the frontend passes on this request to the backend using the API and API routing. The backend then processes the request and queries the remote database. Upon a successful return of results from the queried database, the backend processes this response, and feeds it to the frontend using the API. The frontend then feeds this response to the browser, and the user remains happy :) ,  with all of this happening in split-seconds 😁</p>
+
 <h3 align="center">Setup Instructions</h3>
 <strong>
 1. Head over to <a href="" target="_blank">PuzzleRender</a> <br>
@@ -39,4 +42,4 @@
 
 <h3 align="center">Usage Guidelines</h3>
 
-<h3 align="center">Overview Of Project Architecture</h3>
+
