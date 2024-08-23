@@ -10,10 +10,15 @@
 <!-- Meet The Team -->
 <h3 align="center">The Team</h3>
 
-| <img src="static/images/team/favour-michael.jpg" alt="Favour Michael" width="250" height="250"> <p align="center"><a href="https://linktr.ee/froches">Favour Michael</a></p>      | <img src="static/images/team/olusegun-adeleke.jpg" alt="Olusegun Adeleke" width="250" height="250"> <p align="center"><a href="https://segunadeleke.tech/">Segun Adeleke</a></p>         |
------------------------------------------------------------|-------------------------------------------------------------|
-| <img src="static/images/team/dohou-daniel.jpg" alt="Dohou Daniel Favour" width="250" height="250"> <strong><p align="center"><a href="https://linktr.ee/dohoudanielfavour/">Dohou Daniel Favour</a></p></strong>   | <img src="static/images/team/cobby-solomon.jpg" alt="Cobby Solomon" width="250" height="250"> <strong><p align="center"><a href="https://beacons.ai/cobbysefahsolomon">Cobby Solomon</a></p></strong>               |
+|     Frontend Dev     |     Backend Dev     |     Backend Dev     |     Backend Dev     | 
+|----------|----------|----------|----------|
+| <strong><img src="static/images/team/favour-michael.jpg" alt="Favour Michael" width="125" height="125"> <p align="center"><a href="https://linktr.ee/froches">Favour Michael</a></p></strong>   | <strong><img src="static/images/team/olusegun-adeleke.jpg" alt="Olusegun Adeleke" width="125" height="125"> <p align="center"><a href="https://segunadeleke.tech/">Segun Adeleke</a></p></strong>   | <img src="static/images/team/dohou-daniel.jpg" alt="Dohou Daniel Favour" width="125" height="125"> <strong><p align="center"><a href="https://linktr.ee/dohoudanielfavour/">Dohou Daniel Favour</a></p></strong>   | <img src="static/images/team/cobby-solomon.jpg" alt="Cobby Solomon" width="125" height="125"> <strong><p align="center"><a href="https://beacons.ai/cobbysefahsolomon">Cobby Solomon</a></p></strong>   |
 
+<!--
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <img src="static/images/team/favour-michael.jpg" alt="Favour Michael" width="125" height="125"> <p align="center"><a href="https://linktr.ee/froches">Favour Michael</a></p> | <img src="static/images/team/olusegun-adeleke.jpg" alt="Olusegun Adeleke" width="125" height="125"> <p align="center"><a href="https://segunadeleke.tech/">Segun Adeleke</a></p> | <img src="static/images/team/dohou-daniel.jpg" alt="Dohou Daniel Favour" width="125" height="125"> <strong><p align="center"><a href="https://linktr.ee/dohoudanielfavour/">Dohou Daniel Favour</a></p></strong> | <img src="static/images/team/cobby-solomon.jpg" alt="Cobby Solomon" width="125" height="125"> <strong><p align="center"><a href="https://beacons.ai/cobbysefahsolomon">Cobby Solomon</a></p></strong> |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-->
 <br>
 <h3 align="center">Overview Of Project Architecture</h3>
   <p align="center">When the user visits PuzzleRender, a request to the server is made through the browser. The request is then sent to the frontend, and the frontend passes on this request to the backend using the API and API routing. The backend then processes the request and queries the remote database. Upon a successful return of results from the queried database, the backend processes this response, and feeds it to the frontend using the API. The frontend then feeds this response to the browser, and the user remains happy :) (Psst!, all of this happens in split-seconds 😁)</p>
