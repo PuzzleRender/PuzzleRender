@@ -20,8 +20,26 @@
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -->
 <br>
+
+<strong><h3 align="center">Technologies Used</h3></strong>
+<div align="center">
+  <img height="32" width="32" src="https://cdn.simpleicons.org/python" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/django" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/nextdotjs" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/mysql" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/sqlalchemy" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/openai" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/npm" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/git" /> &nbsp;
+  <img height="32" width="32" src="https://cdn.simpleicons.org/github" /> &nbsp;
+</div>
+
+<br>
+
 <h3 align="center">Overview Of Project Architecture</h3>
   <p align="center">When the user visits PuzzleRender, a request to the server is made through the browser. The request is then sent to the frontend, and the frontend passes on this request to the backend using the API and API routing. The backend then processes the request and queries the remote database. Upon a successful return of results from the queried database, the backend processes this response, and feeds it to the frontend using the API. The frontend then feeds this response to the browser, and the user remains happy :) (Psst!, all of this happens in split-seconds 😁)</p>
+
+
 
 <h3 align="center">Setup Instructions</h3>
 <strong>
