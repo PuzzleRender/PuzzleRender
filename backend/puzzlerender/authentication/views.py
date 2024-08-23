@@ -67,13 +67,24 @@ def signin_view(request):
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
+from rest_framework_simplejwt.exceptions import TokenError
 
 @api_view(['POST'])
 def signout_view(request):
     try:
-        refresh_token = request.data["refresh"]
+        refresh_token = request.data.get("refresh")
+        if not refresh_token:
+            return Response({"success": False, "error": "Refresh token is required."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Create a RefreshToken object
         token = RefreshToken(refresh_token)
-        token.blacklist()
+        
+        # Blacklist the refresh token
+        token.blacklist()  # This method should be available if blacklist is set up correctly
+        
         return Response({"success": True}, status=status.HTTP_200_OK)
+    except TokenError as e:
+        return Response({"success": False, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({"success": False, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

@@ -54,6 +54,8 @@ INSTALLED_APPS = [
 
     'prenderapp',
     'authentication',
+
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 # MIDDLEWARE = [
