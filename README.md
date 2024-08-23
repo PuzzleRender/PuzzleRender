@@ -10,9 +10,9 @@
 <!-- Meet The Team -->
 <h3 align="center">The Team</h3>
 
-| <img src="static/images/team/favour-michael.jpg" alt="Favour Michael" width="375" height="375"> <p align="center"><a href="https://linktr.ee/froches">Favour Michael</a></p>      | <img src="static/images/team/olusegun-adeleke.jpg" alt="Olusegun Adeleke" width="375" height="375"> <p align="center"><a href="https://segunadeleke.tech/">Segun Adeleke</a></p>         |
+| <img src="static/images/team/favour-michael.jpg" alt="Favour Michael" width="250" height="250"> <p align="center"><a href="https://linktr.ee/froches">Favour Michael</a></p>      | <img src="static/images/team/olusegun-adeleke.jpg" alt="Olusegun Adeleke" width="250" height="250"> <p align="center"><a href="https://segunadeleke.tech/">Segun Adeleke</a></p>         |
 -----------------------------------------------------------|-------------------------------------------------------------|
-| <img src="static/images/team/dohou-daniel.jpg" alt="Dohou Daniel Favour" width="375" height="375"> <strong><p align="center"><a href="https://linktr.ee/dohoudanielfavour/">Dohou Daniel Favour</a></p></strong>   | <img src="static/images/team/cobby-solomon.jpg" alt="Cobby Solomon" width="375" height="375"> <strong><p align="center"><a href="https://beacons.ai/cobbysefahsolomon">Cobby Solomon</a></p></strong>               |
+| <img src="static/images/team/dohou-daniel.jpg" alt="Dohou Daniel Favour" width="250" height="250"> <strong><p align="center"><a href="https://linktr.ee/dohoudanielfavour/">Dohou Daniel Favour</a></p></strong>   | <img src="static/images/team/cobby-solomon.jpg" alt="Cobby Solomon" width="250" height="250"> <strong><p align="center"><a href="https://beacons.ai/cobbysefahsolomon">Cobby Solomon</a></p></strong>               |
 
 <br>
 <h3 align="center">Overview Of Project Architecture</h3>
