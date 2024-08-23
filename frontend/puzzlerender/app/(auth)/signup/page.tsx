@@ -23,8 +23,14 @@ import { Input } from "@/components/ui/input";
 
 const formSchema = z
   .object({
+    first_name: z.string().min(2, {
+      message: "First name must be at least 2 characters.",
+    }),
+    last_name: z.string().min(2, {
+      message: "Last name must be at least 2 characters.",
+    }),
     email: z.string().email({
-      message: "Username must be at least 2 characters.",
+      message: "Please enter a valid email address.",
     }),
     username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
@@ -48,17 +54,18 @@ const formSchema = z
     if (data.password1 !== data.password2) {
       ctx.addIssue({
         code: "custom",
-        path: ["passwordConfirm"],
+        path: ["password2"],
         message: "Passwords do not match.",
       });
     }
   });
-// first name, last name, username, email, password, confirm password
 
 export default function SignupPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      first_name: "",
+      last_name: "",
       email: "",
       username: "",
       password1: "",
@@ -67,46 +74,43 @@ export default function SignupPage() {
   });
 
   const router = useRouter();
-  // const API_URL = "http://137.184.102.24"
-  const API_URL = "http://127.0.0.1:8000"
-
-  const [csrfToken, setCsrfToken] = useState('');
-
-  useEffect(() => {
-    axios.get(`${API_URL}/gettoken/`)
-      .then((response) => {
-        setCsrfToken(response.data.csrfToken);
-      })
-      .catch((error) => {
-        console.error('Error fetching CSRF token:', error);
-      });
-  }, []);
+  const API_URL = "http://127.0.0.1:8000";
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { email, username, password1, password2 } = values;
+    const { first_name, last_name, email, username, password1, password2 } = values;
 
     try {
-      const response = await axios.post(`${API_URL}/accounts/signup/`, {
+      const response = await axios.post(`${API_URL}/signup/`, {
+        first_name,
+        last_name,
         email,
         username,
         password1,
         password2,
       });
 
-      if (response.status === 200) {
-        // router.push("/dashboard");
+      if (response.status === 201) {
         toast.success("Signup successful!");
         console.log("Signup successful!");
+        router.push("/dashboard");
       } else {
-        toast.error("");
+        toast.error("Signup failed.");
       }
     } catch (error) {
-      // Handle errors, e.g., display a notification to the user
-      // console.error("Login failed", error);
       if (axios.isAxiosError(error)) {
-        console.error("Axios error:", error.response?.data || error.message);
-        toast.error(error.response?.data?.error || "An error occurred");
+        const errors = error.response?.data.errors;
+  
+        if (errors) {
+          // Display only the error messages without the keys
+          for (const messages of Object.values(errors)) {
+            (messages as string[]).forEach((message) => {
+              toast.error(message);
+            });
+          }
+        } else {
+          toast.error(error.response?.data?.error || "An error occurred");
+        }
       } else {
         console.error("Unexpected error:", error);
         toast.error("An unexpected error occurred");
@@ -127,6 +131,38 @@ export default function SignupPage() {
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-4 w-full"
             >
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="First Name" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Enter your first name.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Last Name" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Enter your last name.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -166,7 +202,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="password" {...field} />
+                      <Input type="password" placeholder="password" {...field} />
                     </FormControl>
                     <FormDescription>This is your password.</FormDescription>
                     <FormMessage />
@@ -180,7 +216,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="confirm password" {...field} />
+                      <Input type="password" placeholder="confirm password" {...field} />
                     </FormControl>
                     <FormDescription>Confirm your password.</FormDescription>
                     <FormMessage />

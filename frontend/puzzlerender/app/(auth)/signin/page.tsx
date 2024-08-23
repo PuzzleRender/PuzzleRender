@@ -8,6 +8,7 @@ import { z } from "zod";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,7 @@ import { Input } from "@/components/ui/input";
 
 const formSchema = z
   .object({
-    email: z.string().email({
+    username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
     password: z
@@ -46,24 +47,31 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
   const router = useRouter();
-  const API_URL = "http://137.184.102.24";
+  // const API_URL = "http://137.184.102.24";
+  const API_URL = "http://127.0.0.1:8000";
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { email, password } = values;
+    const { username, password } = values;
 
     try {
-      const response = await axios.post(`${API_URL}/accounts/login/`, {
-        email,
+      const response = await axios.post(`${API_URL}/signin/`, {
+        username,
         password,
       });
 
       if (response.status === 200) {
+        const { access, refresh } = response.data;
+
+        // Set the tokens as cookies
+        Cookies.set("access", access, { expires: 1 }); // Expires in 1 day
+        Cookies.set("refresh", refresh, { expires: 7 }); 
+
         router.push("/dashboard");
         toast.success("Login successful!");
         console.log("Login successful!");
@@ -72,7 +80,24 @@ export default function LoginPage() {
       }
     } catch (error) {
       // Handle errors, e.g., display a notification to the user
-      console.error("Login failed", error);
+      // console.error("Login failed", error);
+      if (axios.isAxiosError(error)) {
+        const errors = error.response?.data.errors;
+  
+        if (errors) {
+          // Display only the error messages without the keys
+          for (const messages of Object.values(errors)) {
+            (messages as string[]).forEach((message) => {
+              toast.error(message);
+            });
+          }
+        } else {
+          toast.error(error.response?.data?.error || "An error occurred");
+        }
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error("An unexpected error occurred");
+      }
     }
   }
 
@@ -91,15 +116,15 @@ export default function LoginPage() {
             >
               <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Username</FormLabel>
                     <FormControl>
                       <Input placeholder="your@mail.com" {...field} />
                     </FormControl>
                     <FormDescription>
-                      This is your email address.
+                      This is your username.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
