@@ -8,7 +8,6 @@ from io import BytesIO
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-@login_required
 def generate_puzzle(request, size):
   if (size < 9 or size > 25):
      return HttpResponse(f"Size must be between 9 and 25")
@@ -35,7 +34,6 @@ def generate_puzzle(request, size):
 
   return HttpResponse(f"{puzzle.id} ===> Puzzle and clues generated and saved.")
 
-@login_required
 def download_puzzle(request, puzzle_id):
     puzzle = get_object_or_404(Puzzle, id=puzzle_id)
     clue = get_object_or_404(Clue, puzzle=puzzle)
@@ -44,7 +42,6 @@ def download_puzzle(request, puzzle_id):
         return response
     return HttpResponse("Puzzle PDF not found.")
 
-@login_required
 def download_clue(request, puzzle_id):
     puzzle = get_object_or_404(Puzzle, id=puzzle_id)
     clue = get_object_or_404(Clue, puzzle=puzzle)
@@ -55,7 +52,6 @@ def download_clue(request, puzzle_id):
 
 
 # generate and download puzzle in zip
-@login_required
 def generate_and_download_puzzle(request, size):
   if (size < 9 or size > 25):
      return HttpResponse(f"Size must be between 9 and 25")
