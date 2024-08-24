@@ -98,7 +98,7 @@ class Clues(Base):
 
 
 # Create an engine with the database URL
-db_url = os.getenv['SQLALCHEMY_DATABASE_URI']
+db_url = os.getenv('SQLALCHEMY_DATABASE_URI')
 engine = create_engine(db_url, echo=True)
 #
 # Creating the tables
