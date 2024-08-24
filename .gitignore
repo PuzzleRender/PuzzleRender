@@ -1,2 +1,8 @@
-backend/puzzlerender/puzzlerender/__pycache__/__init__.cpython-310.pyc
-backend/puzzlerender/puzzlerender/__pycache__/settings.cpython-310.pyc
+venv/
+__pycache__
+db.sqlite3
+clues/
+puzzles/
+*.pdf
+.env
+node_modules/
