@@ -54,10 +54,46 @@ const SignOut = () => {
   }, []);
 
   return (
-    <div>
-      Signing out...
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      textAlign: 'center',
+      fontFamily: 'Arial, sans-serif'
+    }}>
+      <h2 style={{
+        marginBottom: '20px',
+        color: '#333',
+        fontSize: '24px',
+        fontWeight: 'bold'
+      }}>
+        Signing out...
+      </h2>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <div style={{
+          border: '4px solid #f3f3f3', /* Light grey */
+          borderTop: '4px solid #3498db', /* Blue */
+          borderRadius: '50%',
+          width: '40px',
+          height: '40px',
+          animation: 'spin 2s linear infinite'
+        }} />
+        <style jsx>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
     </div>
   );
+  
 };
 
 export default SignOut;

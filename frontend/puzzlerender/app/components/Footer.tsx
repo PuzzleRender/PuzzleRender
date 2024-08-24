@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-    <div className="bottom-0 bg-white w-full h-[10vh] p-8 flex items-center justify-center">
+    <div className="bottom-0 bg-white w-full h-[10vh] p-8 flex items-center justify-center mt-auto">
       © Copyright PuzzleRender 2024
     </div>
   )

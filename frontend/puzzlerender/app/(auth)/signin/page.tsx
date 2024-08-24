@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -41,9 +41,9 @@ const formSchema = z
         message: "Password must contain at least one special character.",
       }),
   });
-// first name, last name, username, email, password, confirm password
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,6 +58,7 @@ export default function LoginPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { username, password } = values;
+    setLoading(true); // Set loading to true when the form is submitted
 
     try {
       const response = await axios.post(`${API_URL}/signin/`, {
@@ -70,22 +71,18 @@ export default function LoginPage() {
 
         // Set the tokens as cookies
         Cookies.set("access", access, { expires: 1 }); // Expires in 1 day
-        Cookies.set("refresh", refresh, { expires: 7 }); 
+        Cookies.set("refresh", refresh, { expires: 7 });
 
         router.push("/dashboard");
         toast.success("Login successful!");
-        console.log("Login successful!");
       } else {
         toast.error("Login failed");
       }
     } catch (error) {
-      // Handle errors, e.g., display a notification to the user
-      // console.error("Login failed", error);
       if (axios.isAxiosError(error)) {
         const errors = error.response?.data.errors;
-  
+
         if (errors) {
-          // Display only the error messages without the keys
           for (const messages of Object.values(errors)) {
             (messages as string[]).forEach((message) => {
               toast.error(message);
@@ -98,6 +95,8 @@ export default function LoginPage() {
         console.error("Unexpected error:", error);
         toast.error("An unexpected error occurred");
       }
+    } finally {
+      setLoading(false); // Set loading to false when the process is finished
     }
   }
 
@@ -137,7 +136,7 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="password" {...field} />
+                      <Input type="password" placeholder="password" {...field} />
                     </FormControl>
                     <FormDescription>This is your password.</FormDescription>
                     <FormMessage />
@@ -147,9 +146,27 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 variant="default"
-                className="w-full p-6 bg-federal"
+                className="w-full p-6 bg-federal flex justify-center items-center"
+                disabled={loading} // Disable button while loading
               >
-                Submit
+                {loading ? (
+                  <div style={{
+                    border: '4px solid #f3f3f3', /* Light grey */
+                    borderTop: '4px solid #3498db', /* Blue */
+                    borderRadius: '50%',
+                    width: '24px',
+                    height: '24px',
+                    animation: 'spin 1s linear infinite'
+                  }} />
+                ) : (
+                  "Submit"
+                )}
+                <style jsx>{`
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                `}</style>
               </Button>
             </form>
           </Form>

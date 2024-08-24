@@ -5,7 +5,6 @@ const publicPaths = ["/signin", "/signup", "/api/auth"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log('I got to 8')
 
   if (publicPaths.includes(pathname)) {
     return NextResponse.next();
@@ -16,10 +15,9 @@ export function middleware(request: NextRequest) {
     const signInUrl = new URL("/signin", request.url);
     return NextResponse.redirect(signInUrl);
   }
-  console.log("Token exist, allowing access...")
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/account/:path*", "/puzzles/:path*"],
+  matcher: ["/dashboard/", "/account/", "/puzzles/"],
 };

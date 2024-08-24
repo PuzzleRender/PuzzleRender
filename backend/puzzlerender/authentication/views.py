@@ -4,6 +4,16 @@ from django.http import JsonResponse
 def csrf_token_view(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.core.serializers import serialize
+
+def list_users_json(request):
+    users = User.objects.all()
+    users_data = serialize('json', users)
+    return JsonResponse(users_data, safe=False)
+
+
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -88,3 +98,16 @@ def signout_view(request):
         return Response({"success": False, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({"success": False, "error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def user_data_view(request):
+    user = request.user
+    print(request)
+    # Fetch user-specific data
+    user_data = {
+        'username': user.username,
+        'email': user.email,
+        # Add any other data you need
+    }
+    return Response(user_data)

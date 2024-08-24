@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -61,6 +61,7 @@ const formSchema = z
   });
 
 export default function SignupPage() {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,9 +77,9 @@ export default function SignupPage() {
   const router = useRouter();
   const API_URL = "http://127.0.0.1:8000";
 
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { first_name, last_name, email, username, password1, password2 } = values;
+    setLoading(true); // Set loading to true when the form is submitted
 
     try {
       const response = await axios.post(`${API_URL}/signup/`, {
@@ -92,7 +93,6 @@ export default function SignupPage() {
 
       if (response.status === 201) {
         toast.success("Signup successful!");
-        console.log("Signup successful!");
         router.push("/dashboard");
       } else {
         toast.error("Signup failed.");
@@ -100,9 +100,8 @@ export default function SignupPage() {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errors = error.response?.data.errors;
-  
+
         if (errors) {
-          // Display only the error messages without the keys
           for (const messages of Object.values(errors)) {
             (messages as string[]).forEach((message) => {
               toast.error(message);
@@ -115,14 +114,16 @@ export default function SignupPage() {
         console.error("Unexpected error:", error);
         toast.error("An unexpected error occurred");
       }
+    } finally {
+      setLoading(false); // Set loading to false when the process is finished
     }
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center gap-4 p-8">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center gap-4 p-8 pt-24">
       <div>
         <h2 className="text-xl font-bold text-center mt-24">LOGO</h2>
-        <p className="text-3xl font-semibold">SignUp</p>
+        <p className="text-3xl font-semibold">Sign Up</p>
       </div>
       <div className="flex flex-col items-center justify-center w-7/12 min-h-[50vh]">
         <div className="w-full h-full flex items-center justify-center bg-lightcyan rounded-lg border border-federal shadow-xl p-10">
@@ -140,9 +141,7 @@ export default function SignupPage() {
                     <FormControl>
                       <Input placeholder="First Name" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Enter your first name.
-                    </FormDescription>
+                    <FormDescription>Enter your first name.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -156,9 +155,7 @@ export default function SignupPage() {
                     <FormControl>
                       <Input placeholder="Last Name" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Enter your last name.
-                    </FormDescription>
+                    <FormDescription>Enter your last name.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -172,9 +169,7 @@ export default function SignupPage() {
                     <FormControl>
                       <Input placeholder="your@mail.com" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This is your email address.
-                    </FormDescription>
+                    <FormDescription>This is your email address.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -188,9 +183,7 @@ export default function SignupPage() {
                     <FormControl>
                       <Input placeholder="yourusername" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
+                    <FormDescription>This is your public display name.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -226,9 +219,27 @@ export default function SignupPage() {
               <Button
                 type="submit"
                 variant="default"
-                className="w-full p-6 bg-federal"
+                className="w-full p-6 bg-federal flex justify-center items-center"
+                disabled={loading} // Disable button while loading
               >
-                Submit
+                {loading ? (
+                  <div style={{
+                    border: '4px solid #f3f3f3', /* Light grey */
+                    borderTop: '4px solid #3498db', /* Blue */
+                    borderRadius: '50%',
+                    width: '24px',
+                    height: '24px',
+                    animation: 'spin 1s linear infinite'
+                  }} />
+                ) : (
+                  "Submit"
+                )}
+                <style jsx>{`
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                `}</style>
               </Button>
             </form>
           </Form>

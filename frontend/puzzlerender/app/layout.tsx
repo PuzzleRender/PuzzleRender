@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import useAuth from "./components/AuthContext";
-import AuthNavbar from "./components/AuthNavbar"
+import NoAuthLayout from "./components/NoAuthLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,15 +17,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const { isAuthenticated, loading } = useAuth();
-
+  
   return (
     <html lang="en">
       <body className={`${inter.className} bg-stone-200`}>
-        {/* {isAuthenticated? <AuthNavbar /> : <Navbar />} */}
-        <Navbar />
+        {/* <Navbar />
         {children}
-        <Footer />
+        <Footer /> */}
+        <NoAuthLayout>
+          {children}
+        </NoAuthLayout>
       </body>
     </html>
   );

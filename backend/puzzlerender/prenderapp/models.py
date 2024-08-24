@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import User
 """
 The database models app (ORM)
 """
@@ -9,6 +10,7 @@ class Puzzle(models.Model):
     """
     The Puzzle table
     """
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     description = models.TextField()
