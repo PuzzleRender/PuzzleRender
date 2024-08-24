@@ -1,1 +1,0 @@
-<p align="center">Django Setup for PuzzleRender</p>

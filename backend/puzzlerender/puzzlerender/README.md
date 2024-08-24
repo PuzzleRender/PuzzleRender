@@ -1,1 +1,0 @@
-<p align="center">The main app (PuzzleRender)</p>
