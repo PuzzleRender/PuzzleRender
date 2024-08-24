@@ -60,8 +60,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware', 
-    'allauth.account.middleware.AccountMiddleware',# The allauth package
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',Can you hear me? Daniel Yeah, I'm using this. II don't know. Maybe someone hacked my sister, but. I've been having issues. Sorry. Hallelujah. I drive English for that. Sorry, I've been having, like, serious my mind. I have dragged a lot of them at the hop here. I think I can hear from you directly because you know it's a wonderful thing that here Alex did, right? He taught us how to learn and they embarrassed something that would never# The allauth package
     'corsheaders.middleware.CorsMiddleware',
 ]
 
@@ -71,7 +71,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
 
