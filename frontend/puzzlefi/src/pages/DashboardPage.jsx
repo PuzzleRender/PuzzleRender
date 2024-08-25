@@ -31,7 +31,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/user-puzzles/?limit=${puzzlesPerPage}&page=${page}`,
+        `https://learnopolia.tech/user-puzzles/?limit=${puzzlesPerPage}&page=${page}`,
         {
           method: "GET",
           headers: {
@@ -66,7 +66,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/generate/${selectedSize}`,
+        `https://learnopolia.tech/generate/${selectedSize}`,
         {
           method: "GET",
           headers: {
@@ -93,7 +93,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     try {
       setLoadingDownload(puzzleId);
       const response = await fetch(
-        `http://127.0.0.1:8000/download-puzzle/${puzzleId}`
+        `https://learnopolia.tech/download-puzzle/${puzzleId}`
       );
 
       if (!response.ok) {
@@ -120,7 +120,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     try {
       setLoadingDownload(puzzleId);
       const response = await fetch(
-        `http://127.0.0.1:8000/download-clue/${puzzleId}`
+        `https://learnopolia.tech/download-clue/${puzzleId}`
       );
 
       if (!response.ok) {
