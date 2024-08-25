@@ -17,7 +17,6 @@ dbus-python==1.2.18
 Django
 djangorestframework
 djangorestframework-simplejwt
-duplicity==0.8.21
 fasteners==0.14.1
 frozenlist==1.2.0
 future==0.18.2
