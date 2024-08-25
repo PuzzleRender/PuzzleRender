@@ -6,7 +6,6 @@ const NotFoundPage = () => {
   return (
     <>
       {/* remember to add logic to check if signed in and change the nav bar. */}
-      <NavBar />
       <section className="text-center flex flex-col justify-center items-center h-96">
         <FaExclamationTriangle className="text-yellow-400 text-6xl mb-4" />
         <h1 className="text-6xl font-bold mb-4">404 Not Found</h1>
