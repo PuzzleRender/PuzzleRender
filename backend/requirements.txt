@@ -113,3 +113,5 @@ xkit==0.0.0
 yarl==1.7.2
 yt-dlp==2024.8.6
 zipp==1.0.0
+python-dotenv
+mysqlclient
