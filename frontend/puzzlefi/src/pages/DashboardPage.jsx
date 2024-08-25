@@ -14,6 +14,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [puzzlesPerPage, setPuzzlesPerPage] = useState(3);
+  const [selectedSize, setSelectedSize] = useState(15); // Default size
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
@@ -30,7 +31,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await fetch(
-        `https://learnopolia.tech/user-puzzles/?limit=${puzzlesPerPage}&page=${page}`,
+        `http://127.0.0.1:8000/user-puzzles/?limit=${puzzlesPerPage}&page=${page}`,
         {
           method: "GET",
           headers: {
@@ -64,13 +65,16 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     setLoadingGenerate(true);
     const token = localStorage.getItem("jwtToken");
     try {
-      const response = await fetch("https://learnopolia.tech/generate/15", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://127.0.0.1:8000/generate/${selectedSize}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to generate puzzle");
@@ -89,7 +93,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     try {
       setLoadingDownload(puzzleId);
       const response = await fetch(
-        `https://learnopolia.tech/download-puzzle/${puzzleId}`
+        `http://127.0.0.1:8000/download-puzzle/${puzzleId}`
       );
 
       if (!response.ok) {
@@ -116,7 +120,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     try {
       setLoadingDownload(puzzleId);
       const response = await fetch(
-        `https://learnopolia.tech/download-clue/${puzzleId}`
+        `http://127.0.0.1:8000/download-clue/${puzzleId}`
       );
 
       if (!response.ok) {
@@ -156,6 +160,23 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
         </h1>
 
         <div className="my-12 text-center">
+          <label className="block mb-2 text-lg font-medium">
+            Select Puzzle Size:
+            <select
+              value={selectedSize}
+              onChange={(e) => setSelectedSize(parseInt(e.target.value))}
+              className="ml-2 p-2 border rounded-lg"
+            >
+              {[
+                9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+                25,
+              ].map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </label>
           <button
             onClick={handleGeneratePuzzle}
             className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg text-lg mb-6"
@@ -237,9 +258,12 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
                   >
                     Previous
                   </button>
+                  <span className="text-lg">
+                    Page {currentPage} of {totalPages}
+                  </span>
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className={`bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded-lg text-sm ${
+                    className={`bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-3 rounded-lg text-sm ml-2 ${
                       currentPage === totalPages
                         ? "opacity-50 cursor-not-allowed"
                         : ""
