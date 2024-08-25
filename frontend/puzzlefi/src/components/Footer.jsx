@@ -9,14 +9,6 @@ function Footer() {
         <p className="text-sm">
           &copy; {new Date().getFullYear()} Puzzlrender. All rights reserved.
         </p>
-        <a
-          href="https://github.com/PuzzleRender/PuzzleRender"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-white underline hover:text-gray-300"
-        >
-          View on GitHub
-        </a>
       </div>
     </footer>
   );
