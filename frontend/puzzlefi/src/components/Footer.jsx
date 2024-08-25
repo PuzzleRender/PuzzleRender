@@ -4,54 +4,19 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 
 function Footer() {
   return (
-    <footer className="bg-indigo-700 text-white py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-lg font-semibold">Contact Us</h3>
-            <p>Email: info@puzzlefi.com</p>
-            <p>Phone: (123) 456-7890</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Quick Links</h3>
-            <ul>
-              <li>
-                <a href="/" className="hover:underline">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="hover:underline">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="/puzzles" className="hover:underline">
-                  Puzzles
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="hover:underline">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="hover:text-gray-300">
-                <FacebookIcon />
-              </a>
-              <a href="#" className="hover:text-gray-300">
-                <TwitterIcon />
-              </a>
-              <a href="#" className="hover:text-gray-300">
-                <InstagramIcon />
-              </a>
-            </div>
-          </div>
-        </div>
+    <footer className="bg-indigo-700 text-white py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <p className="text-sm">
+          &copy; {new Date().getFullYear()} Puzzlrender. All rights reserved.
+        </p>
+        <a
+          href="https://github.com/PuzzleRender/PuzzleRender"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-white underline hover:text-gray-300"
+        >
+          View on GitHub
+        </a>
       </div>
     </footer>
   );
