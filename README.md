@@ -40,7 +40,7 @@
   <p align="center">When the user visits PuzzleRender, a request to the server is made through the browser. The request is then sent to the frontend, and the frontend passes on this request to the backend using the API and API routing. The backend then processes the request and queries the remote database. Upon a successful return of results from the queried database, the backend processes this response, and feeds it to the frontend using the API. The frontend then feeds this response to the browser, and the user remains happy :) (Psst!, all of this happens in split-seconds 😁)</p>
 
 
-
+<!--
 <h3 align="center">Setup Instructions</h3>
 <strong>
 1. Head over to <a href="" target="_blank">PuzzleRender</a> <br>
@@ -61,8 +61,5 @@
 5. <br>
 6. <br>
 </strong>
-
-
 <h3 align="center">Usage Guidelines</h3>
-
-
+-->
