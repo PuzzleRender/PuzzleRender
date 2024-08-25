@@ -1,6 +1,5 @@
 aiohttp==3.8.1
 aiosignal
-apturl
 asgiref==3.8.1
 async-timeout==4.0.3
 attrs==21.2.0
