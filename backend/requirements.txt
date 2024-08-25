@@ -47,16 +47,6 @@ pexpect==4.8.0
 Pillow==9.0.1
 protobuf==3.12.4
 proton-keyring-linux==0.0.1
-proton-keyring-linux-secretservice==0.0.1
-proton-vpn-api-core==0.21.0
-proton-vpn-connection==0.14.2
-proton-vpn-gtk-app==4.2.0
-proton-vpn-killswitch==0.4.0
-proton-vpn-killswitch-network-manager==0.4.3
-proton-vpn-logger==0.2.1
-proton-vpn-network-manager==0.4.0
-proton-vpn-network-manager-openvpn==0.0.4
-proton-vpn-session==0.6.5
 ptyprocess==0.7.0
 pycairo==1.20.1
 pycodestyle==2.8.0
