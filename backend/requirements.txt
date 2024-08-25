@@ -66,7 +66,6 @@ rest-framework-simplejwt==0.0.2
 SecretStorage==3.3.1
 six==1.16.0
 sqlparse==0.4.2
-systemd-python==234
 tabulate==0.8.9
 typing_extensions==4.12.2
 ubuntu-drivers-common==0.0.0
