@@ -16,7 +16,7 @@ const RegisterPage = () => {
   const registerSubmit = async (newUser) => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://104.248.229.14/signup/", {
+      const response = await fetch("https://learnopolia.tech/signup/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

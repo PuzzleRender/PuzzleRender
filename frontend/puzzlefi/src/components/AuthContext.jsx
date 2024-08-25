@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
     if (savedToken && savedUser) {
       // Validate the token with your backend API
-      fetch("http://104.248.229.14/api/validate-token", {
+      fetch("https://learnopolia.tech/api/validate-token", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${savedToken}`,
