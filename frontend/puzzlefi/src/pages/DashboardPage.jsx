@@ -30,7 +30,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     const token = localStorage.getItem("jwtToken");
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/user-puzzles/?limit=${puzzlesPerPage}&page=${page}`,
+        `http://104.248.229.14/user-puzzles/?limit=${puzzlesPerPage}&page=${page}`,
         {
           method: "GET",
           headers: {
@@ -64,7 +64,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     setLoadingGenerate(true);
     const token = localStorage.getItem("jwtToken");
     try {
-      const response = await fetch("http://127.0.0.1:8000/generate/15", {
+      const response = await fetch("http://104.248.229.14/generate/15", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     try {
       setLoadingDownload(puzzleId);
       const response = await fetch(
-        `http://127.0.0.1:8000/download-puzzle/${puzzleId}`
+        `http://104.248.229.14/download-puzzle/${puzzleId}`
       );
 
       if (!response.ok) {
@@ -116,7 +116,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
     try {
       setLoadingDownload(puzzleId);
       const response = await fetch(
-        `http://127.0.0.1:8000/download-clue/${puzzleId}`
+        `http://104.248.229.14/download-clue/${puzzleId}`
       );
 
       if (!response.ok) {

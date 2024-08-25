@@ -43,7 +43,7 @@ const AccountPage = () => {
   const handleSave = async () => {
     setIsSaving(true); // Set loading state to true
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/update-user/", {
+      const response = await fetch("http://104.248.229.14/api/update-user/", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const AccountPage = () => {
     setIsChangingPassword(true); // Set loading state to true
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/change-password/",
+        "http://104.248.229.14/api/change-password/",
         {
           method: "POST",
           headers: {

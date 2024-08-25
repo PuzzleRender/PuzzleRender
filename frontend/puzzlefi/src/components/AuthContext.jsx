@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
     if (savedToken && savedUser) {
       // Validate the token with your backend API
-      fetch("http://127.0.0.1:8000/api/validate-token", {
+      fetch("http://104.248.229.14/api/validate-token", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${savedToken}`,
