@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../components/AuthContext";
+import { Navigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader"; // Import ClipLoader from react-spinners
 
 const AccountPage = () => {
   const { isAuthenticated, user, token, setAndUpdateUser } = useAuth();
@@ -16,6 +18,12 @@ const AccountPage = () => {
     new_password1: "",
     new_password2: "",
   });
+  const [isSaving, setIsSaving] = useState(false); // State for Save button loading
+  const [isChangingPassword, setIsChangingPassword] = useState(false); // State for Change Password button loading
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
 
   useEffect(() => {
     if (user) {
@@ -33,6 +41,7 @@ const AccountPage = () => {
   };
 
   const handleSave = async () => {
+    setIsSaving(true); // Set loading state to true
     try {
       const response = await fetch("http://127.0.0.1:8000/api/update-user/", {
         method: "PUT",
@@ -55,6 +64,8 @@ const AccountPage = () => {
       }
     } catch (error) {
       toast.error("Failed to update account. Please try again.");
+    } finally {
+      setIsSaving(false); // Set loading state to false
     }
   };
 
@@ -69,6 +80,7 @@ const AccountPage = () => {
       toast.error("New passwords do not match");
       return;
     }
+    setIsChangingPassword(true); // Set loading state to true
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/api/change-password/",
@@ -97,6 +109,8 @@ const AccountPage = () => {
       }
     } catch (error) {
       toast.error("Failed to change password. Please try again.");
+    } finally {
+      setIsChangingPassword(false); // Set loading state to false
     }
   };
 
@@ -173,9 +187,10 @@ const AccountPage = () => {
             ) : (
               <button
                 onClick={handleSave}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline relative"
+                disabled={isSaving} // Disable button when loading
               >
-                Save
+                {isSaving ? <ClipLoader size={24} color={"white"} /> : "Save"}
               </button>
             )}
           </div>
@@ -228,9 +243,14 @@ const AccountPage = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline relative"
+                disabled={isChangingPassword} // Disable button when loading
               >
-                Change Password
+                {isChangingPassword ? (
+                  <ClipLoader size={24} color={"white"} />
+                ) : (
+                  "Change Password"
+                )}
               </button>
             </div>
           </form>

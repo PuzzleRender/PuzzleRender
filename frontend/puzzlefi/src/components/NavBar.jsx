@@ -16,7 +16,7 @@ function NavBar() {
             <NavLink className="flex flex-shrink-0 items-center mr-4" to="/">
               <img className="h-10 w-auto" src={Logo} alt="Puzzlefi" />
               <span className="hidden md:block text-white text-2xl font-bold ml-2">
-                Puzzlefi
+                Puzzlerender
               </span>
             </NavLink>
             <div className="md:ml-auto">

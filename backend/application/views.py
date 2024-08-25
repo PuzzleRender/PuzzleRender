@@ -24,15 +24,35 @@ from django.views.generic import TemplateView
 class IndexView(TemplateView):
     template_name = 'index.html'
 
+from django.core.paginator import Paginator
 
 # class UserPuzzlesView(LoginRequiredMixin, APIView):
 class UserPuzzlesView(APIView):
-    # permission_classes = [IsAuthenticated]
-
     def get(self, request):
-        user_puzzles = Puzzle.objects.filter(user=request.user)
-        serializer = PuzzleSerializer(user_puzzles, many=True)
-        return Response(serializer.data)
+        # Get the limit and page from query parameters
+        limit = int(request.GET.get('limit', 3))  # Default to 3 if not provided
+        page_number = int(request.GET.get('page', 1))  # Default to the first page
+        
+        # Fetch puzzles for the authenticated user
+        user_puzzles = Puzzle.objects.filter(user=request.user).order_by('-created_at')
+
+        # Create a Paginator object
+        paginator = Paginator(user_puzzles, limit)
+        
+        # Get the current page
+        page = paginator.get_page(page_number)
+
+        # Serialize the data
+        serializer = PuzzleSerializer(page.object_list, many=True)
+
+        # Return paginated data along with pagination info
+        return Response({
+            'puzzles': serializer.data,
+            'total_pages': paginator.num_pages,
+            'current_page': page_number,
+            'has_next': page.has_next(),
+            'has_previous': page.has_previous(),
+        })
     
 class DeletePuzzleView(LoginRequiredMixin, APIView):
     permission_classes = [IsAuthenticated]
@@ -76,10 +96,7 @@ class GeneratePuzzle(APIView):
 
         return HttpResponse(f"{puzzle.id} ===> Puzzle and clues generated and saved.")
 
-class DownloadPuzzle(LoginRequiredMixin, APIView):
-    authentication_clases = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
+class DownloadPuzzle(APIView):
     def get(self, request, *args, **kwargs):
         puzzle_id = kwargs.get('puzzle_id')
         puzzle = get_object_or_404(Puzzle, id=puzzle_id)
@@ -89,10 +106,7 @@ class DownloadPuzzle(LoginRequiredMixin, APIView):
             return response
         return HttpResponse("Puzzle PDF not found.")
     
-class DownloadClue(LoginRequiredMixin, APIView):
-    authentication_clases = [SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
+class DownloadClue(APIView):
     def get(self, request, *args, **kwargs):
         puzzle_id = kwargs.get('puzzle_id')
         puzzle = get_object_or_404(Puzzle, id=puzzle_id)
