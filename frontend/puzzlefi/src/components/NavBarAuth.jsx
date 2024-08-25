@@ -22,6 +22,9 @@ function NavBarAuth() {
             <div className="md:ml-auto">
               <div className="flex space-x-2">
                 <NavLink to="/" className={LinkClass}>
+                  Home
+                </NavLink>
+                <NavLink to="/dashboard" className={LinkClass}>
                   Dashboard
                 </NavLink>
                 <NavLink to="/me" className={LinkClass}>

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useAuth } from "../components/AuthContext";
 
-const AccountPage = ({ user, updateUser, changePassword }) => {
+const AccountPage = () => {
+  const { isAuthenticated, user, token, setAndUpdateUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
     first_name: "",
@@ -10,16 +12,16 @@ const AccountPage = ({ user, updateUser, changePassword }) => {
     email: "",
   });
   const [passwordData, setPasswordData] = useState({
-    current_password: "",
-    new_password: "",
-    confirm_password: "",
+    old_password: "",
+    new_password1: "",
+    new_password2: "",
   });
 
   useEffect(() => {
     if (user) {
       setUserData(user);
     }
-  }, [user]);
+  }, [user, isAuthenticated]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,9 +34,25 @@ const AccountPage = ({ user, updateUser, changePassword }) => {
 
   const handleSave = async () => {
     try {
-      await updateUser(userData);
-      setIsEditing(false);
-      toast.success("Account updated successfully!");
+      const response = await fetch("http://127.0.0.1:8000/api/update-user/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setIsEditing(false);
+        toast.success(data.message);
+        setAndUpdateUser(data.user);
+      } else {
+        Object.entries(data.errors).forEach(([field, errors]) => {
+          toast.error(`${field}: ${errors.join(", ")}`);
+        });
+      }
     } catch (error) {
       toast.error("Failed to update account. Please try again.");
     }
@@ -47,18 +65,36 @@ const AccountPage = ({ user, updateUser, changePassword }) => {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    if (passwordData.new_password !== passwordData.confirm_password) {
+    if (passwordData.new_password1 !== passwordData.new_password2) {
       toast.error("New passwords do not match");
       return;
     }
     try {
-      await changePassword(passwordData);
-      toast.success("Password changed successfully!");
-      setPasswordData({
-        current_password: "",
-        new_password: "",
-        confirm_password: "",
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/change-password/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(passwordData),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        toast.success(data.message);
+        setPasswordData({
+          old_password: "",
+          new_password1: "",
+          new_password2: "",
+        });
+      } else {
+        Object.entries(data.errors).forEach(([field, errors]) => {
+          toast.error(`${field}: ${errors.join(", ")}`);
+        });
+      }
     } catch (error) {
       toast.error("Failed to change password. Please try again.");
     }
@@ -156,9 +192,9 @@ const AccountPage = ({ user, updateUser, changePassword }) => {
               </label>
               <input
                 type="password"
-                name="current_password"
+                name="old_password"
                 className="border rounded w-full py-2 px-3 mb-2"
-                value={passwordData.current_password}
+                value={passwordData.old_password}
                 onChange={handlePasswordChange}
                 required
               />
@@ -169,9 +205,9 @@ const AccountPage = ({ user, updateUser, changePassword }) => {
               </label>
               <input
                 type="password"
-                name="new_password"
+                name="new_password1"
                 className="border rounded w-full py-2 px-3 mb-2"
-                value={passwordData.new_password}
+                value={passwordData.new_password1}
                 onChange={handlePasswordChange}
                 required
               />
@@ -182,9 +218,9 @@ const AccountPage = ({ user, updateUser, changePassword }) => {
               </label>
               <input
                 type="password"
-                name="confirm_password"
+                name="new_password2"
                 className="border rounded w-full py-2 px-3 mb-2"
-                value={passwordData.confirm_password}
+                value={passwordData.new_password2}
                 onChange={handlePasswordChange}
                 required
               />

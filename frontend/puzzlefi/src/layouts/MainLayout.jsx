@@ -7,8 +7,14 @@ import NavBarAuth from "../components/NavBarAuth";
 import { useAuth } from "../components/AuthContext";
 
 const MainLayout = () => {
-  const { isAuthenticated } = useAuth();
-
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
   return (
     <>
       {isAuthenticated ? <NavBarAuth /> : <NavBar />}

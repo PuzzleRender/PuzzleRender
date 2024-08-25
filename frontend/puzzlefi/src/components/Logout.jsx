@@ -1,6 +1,7 @@
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Logout = () => {
   const { logout } = useAuth();
@@ -9,6 +10,7 @@ const Logout = () => {
   useEffect(() => {
     const performLogout = () => {
       logout();
+      toast.success("Logout successful!");
       navigate("/"); // Redirect to home page
     };
 

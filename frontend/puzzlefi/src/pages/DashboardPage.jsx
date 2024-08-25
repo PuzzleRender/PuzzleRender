@@ -5,7 +5,7 @@ import { useAuth } from "../components/AuthContext";
 import { Navigate } from "react-router-dom";
 
 const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
   const [puzzleHistory, setPuzzleHistory] = useState([]);
 
   // const [puzzleHistory, setPuzzleHistory] = useState([
@@ -75,7 +75,6 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
       const result = await response.json();
       console.log(result);
       toast.success("Puzzle generated successfully!");
-      loadPuzzleHistory();
     } catch (error) {
       toast.error("Failed to generate puzzle");
     }
@@ -84,7 +83,9 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
   return (
     <>
       <div className="container mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-2 mt-6 ml-2">Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-2 mt-6 ml-2">
+          Welcome, {user.first_name}!
+        </h1>
 
         <div className="my-12 text-center">
           <button

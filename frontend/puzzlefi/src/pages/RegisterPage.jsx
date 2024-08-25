@@ -9,11 +9,13 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const registerSubmit = async (newUser) => {
     try {
+      setIsLoading(true);
       const response = await fetch("http://127.0.0.1:8000/signup/", {
         method: "POST",
         headers: {
@@ -38,6 +40,8 @@ const RegisterPage = () => {
       const errorMessage =
         error.message || "Registration failed. Please try again.";
       toast.error(errorMessage);
+    } finally {
+      setIsLoading(false); // Hide spinner regardless of success or error
     }
   };
 
@@ -166,12 +170,20 @@ const RegisterPage = () => {
               />
             </div>
 
-            <div>
+            <div className="relative">
               <button
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50"
                 type="submit"
+                disabled={isLoading} // Disable button while loading
               >
-                Register
+                {isLoading ? ( // Conditionally render spinner or text
+                  <div className="flex items-center justify-center">
+                    <div className="spinner mr-2"></div>
+                    Loading...
+                  </div>
+                ) : (
+                  "Register"
+                )}
               </button>
             </div>
           </form>

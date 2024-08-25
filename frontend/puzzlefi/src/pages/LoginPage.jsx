@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../components/AuthContext";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const loginSubmit = async (loginData) => {
     try {
+      setIsLoading(true);
       const response = await fetch("http://127.0.0.1:8000/signin/", {
         method: "POST",
         headers: {
@@ -22,12 +26,15 @@ const LoginPage = () => {
         throw new Error("Login failed");
       }
 
-      const { access } = await response.json(); // Assuming the JWT is returned in the 'token' field
-      localStorage.setItem("jwtToken", access); // Store the token in localStorage
+      const { access, user } = await response.json(); // Assuming the JWT is returned in the 'token' field
+
+      login(user, access);
       toast.success("Logged in successfully!");
       navigate("/dashboard"); // Navigate to the homepage or any other route
     } catch (error) {
       toast.error("Login failed. Please check your credentials.");
+    } finally {
+      setIsLoading(false); // Hide spinner regardless of success or error
     }
   };
 
@@ -81,12 +88,20 @@ const LoginPage = () => {
               />
             </div>
 
-            <div>
+            <div className="relative">
               <button
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50"
                 type="submit"
+                disabled={isLoading} // Disable button while loading
               >
-                Login
+                {isLoading ? ( // Conditionally render spinner or text
+                  <div className="flex items-center justify-center">
+                    <div className="spinner mr-2"></div>
+                    Loading...
+                  </div>
+                ) : (
+                  "Log in"
+                )}
               </button>
             </div>
           </form>
