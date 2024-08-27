@@ -91,7 +91,7 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
 
   const handleDownloadPuzzle = async (puzzleId) => {
     try {
-      window.location.href = `https://learnopolia.tech/puzzles/puzzle-${puzzleId}.pdf`;
+      window.open(`https://learnopolia.tech/puzzles/puzzle-${puzzleId}.pdf`, '_blank');
       // window.location.href = `https://learnopolia.tech/download-puzzle/${puzzleId}`;
       // setLoadingDownload(puzzleId);
       // const response = await fetch(
@@ -120,24 +120,25 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
 
   const handleDownloadClue = async (puzzleId) => {
     try {
-      setLoadingDownload(puzzleId);
-      const response = await fetch(
-        `https://learnopolia.tech/download-clue/${puzzleId}`
-      );
+      window.open(`https://learnopolia.tech/clues/clue-${puzzleId}.pdf`, '_blank');
+      // setLoadingDownload(puzzleId);
+      // const response = await fetch(
+      //   `https://learnopolia.tech/download-clue/${puzzleId}`
+      // );
 
-      if (!response.ok) {
-        throw new Error(`Failed to download clue: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`Failed to download clue: ${response.status}`);
+      // }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `clue-${puzzleId}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(link);
+      // const blob = await response.blob();
+      // const url = window.URL.createObjectURL(blob);
+      // const link = document.createElement("a");
+      // link.href = url;
+      // link.setAttribute("download", `clue-${puzzleId}.pdf`);
+      // document.body.appendChild(link);
+      // link.click();
+      // window.URL.revokeObjectURL(url);
+      // document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading clue:", error);
     } finally {
