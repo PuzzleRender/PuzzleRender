@@ -91,24 +91,25 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
 
   const handleDownloadPuzzle = async (puzzleId) => {
     try {
-      setLoadingDownload(puzzleId);
-      const response = await fetch(
-        `https://learnopolia.tech/download-puzzle/${puzzleId}`
-      );
+      window.location.href = `https://learnopolia.tech/download-puzzle/${puzzleId}`;
+      // setLoadingDownload(puzzleId);
+      // const response = await fetch(
+      //   `https://learnopolia.tech/download-puzzle/${puzzleId}`
+      // );
 
-      if (!response.ok) {
-        throw new Error(`Failed to download puzzle: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`Failed to download puzzle: ${response.status}`);
+      // }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `puzzle-${puzzleId}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(link);
+      // const blob = await response.blob();
+      // const url = window.URL.createObjectURL(blob);
+      // const link = document.createElement("a");
+      // link.href = url;
+      // link.setAttribute("download", `puzzle-${puzzleId}.pdf`);
+      // document.body.appendChild(link);
+      // link.click();
+      // window.URL.revokeObjectURL(url);
+      // document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading puzzle:", error);
     } finally {
