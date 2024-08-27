@@ -91,7 +91,8 @@ const DashboardPage = ({ generatePuzzle, fetchPuzzleHistory }) => {
 
   const handleDownloadPuzzle = async (puzzleId) => {
     try {
-      window.location.href = `https://learnopolia.tech/download-puzzle/${puzzleId}`;
+      window.location.href = `https://learnopolia.tech/puzzles/puzzle-${puzzleId}.pdf`;
+      // window.location.href = `https://learnopolia.tech/download-puzzle/${puzzleId}`;
       // setLoadingDownload(puzzleId);
       // const response = await fetch(
       //   `https://learnopolia.tech/download-puzzle/${puzzleId}`
