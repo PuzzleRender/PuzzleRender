@@ -13,20 +13,12 @@ from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .serializers import PuzzleSerializer
-
-
-# @login_required
-# def home(request):
-#     return render(request, 'index.html')
-
 from django.views.generic import TemplateView
+from django.core.paginator import Paginator
 
 class IndexView(TemplateView):
     template_name = 'index.html'
 
-from django.core.paginator import Paginator
-
-# class UserPuzzlesView(LoginRequiredMixin, APIView):
 class UserPuzzlesView(APIView):
     def get(self, request):
         # Get the limit and page from query parameters
@@ -115,6 +107,7 @@ class DownloadClue(APIView):
             response = FileResponse(clue.pdf_file, as_attachment=True)
             return response
         return HttpResponse("Clue PDF not found.")
+
 class GenerateAndDownload(LoginRequiredMixin, APIView):
     authentication_clases = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
