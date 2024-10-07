@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh -o StrictHostKeyChecking=no root@157.230.215.79 'cd PuzzleRender/backend && 
+          ssh -o StrictHostKeyChecking=no root@157.230.215.79 'cd puzzlerender/backend && 
           source venv/bin/activate && 
           git pull origin main && 
           pip install -r requirements.txt && 
