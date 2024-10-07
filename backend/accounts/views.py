@@ -13,6 +13,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken
 from .serializers import UserSerializer
 from .forms import CustomUserCreationForm
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from .serializers import SignInResponseSerializer, SignInSerializer, SignUpResponseSerializer, SignUpSerializer
 
 User = get_user_model()
 
@@ -29,6 +32,27 @@ def check_auth(request):
 def protected_view(request):
     return Response({'message': 'Protected view'})
 
+@swagger_auto_schema(
+    method='post',
+    request_body=SignUpSerializer,
+    responses={
+        201: SignUpResponseSerializer,
+        400: openapi.Response(
+            'Error',
+            schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                'errors': openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                    'first_name': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING)),
+                    'last_name': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING)),
+                    'username': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING)),
+                    'email': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING)),
+                    'password1': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING)),
+                    'password2': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING)),
+                }),
+            })
+        ),
+    }
+)
 @api_view(['POST'])
 def signup_view(request):
     data = request.data
@@ -38,6 +62,20 @@ def signup_view(request):
         return Response({"success": True, "username": user.username}, status=status.HTTP_201_CREATED)
     return Response({"success": False, "errors": form.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+@swagger_auto_schema(
+    method='post',
+    request_body=SignInSerializer,
+    responses={
+        201: SignInResponseSerializer,
+        400: openapi.Response(
+            'Error',
+            schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'success': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                'errors': openapi.Schema(type=openapi.TYPE_OBJECT),
+            })
+        ),
+    }
+)
 @api_view(['POST'])
 def signin_view(request):
     data = request.data

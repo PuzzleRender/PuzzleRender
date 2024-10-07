@@ -1,0 +1,29 @@
+name: CI/CD Deploy
+
+on:
+  push:
+    branches:
+      - main # Change to your default branch if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Deploy to DigitalOcean
+        run: |
+          ssh root@157.230.225.173 'cd PuzzleRender/backend && 
+          source venv/bin/activate && 
+          git pull origin main && 
+          pip install -r requirements.txt && 
+          python manage.py migrate && 
+          python manage.py collectstatic --noinput && 
+          sudo systemctl restart puzzlerender'
