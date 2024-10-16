@@ -83,11 +83,11 @@ export default function Home() {
 
   return (
     <div className="bg-white min-h-screen w-full flex flex-col items-center justify-center space-y-7">
-      <div className="flex gap-4 mt-16">
+      <div className="flex gap-4 mt-16 flex-wrap">
         {dashboardOptions.map((option, index) => (
           <div
             key={index}
-            className="w-[328px] flex items-center justify-start p-5 border-b border-b-gray-300 bg-[#F5F5F5] rounded-md"
+            className="w-full md:w-[328px] flex items-center justify-start p-5 border-b border-b-gray-300 bg-[#F5F5F5] rounded-md"
           >
             <div className="flex items-center flex-row justify-between gap-3 w-full">
               <div>
